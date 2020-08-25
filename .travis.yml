@@ -1,0 +1,19 @@
+language: Java
+jdk:
+- openjdk11
+before_install:
+- chmod +x mvnw
+script: mvn clean package -DskipTests
+after_success:
+- echo "${DOCKER_USER} / ${REPO} / ${VERSION_MAJOR}.${TRAVIS_BUILD_NUMBER}"
+- docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+- docker build -t ${DOCKER_USER}/${REPO}:${VERSION_MAJOR}.${TRAVIS_BUILD_NUMBER} .
+- docker push ${DOCKER_USER}/${REPO}:${VERSION_MAJOR}.${TRAVIS_BUILD_NUMBER}
+- docker tag ${DOCKER_USER}/${REPO}:${VERSION_MAJOR}.${TRAVIS_BUILD_NUMBER} ${DOCKER_USER}/${REPO}:latest
+- docker push ${DOCKER_USER}/${REPO}:latest
+env:
+  global:
+    - DOCKER_USER=maxeasy2
+    - VERSION_MAJOR=1.0
+    - REPO=simple-file
+    - secure: eshW7vLYcpVsbVUqjEjdUZQsqmqaWG6VXPrOCuH/E1cMHALl3L/U1YBTVOdfaXzJstkMMH9KJji9ni84e9EDqGVRQI1aA6N4hcTmgjFFGKg1Q7rWgjf+jf7hESEFYVRLPxdR5n237e5o1JArlu1JGNAOmj45ugWen31uPddEbM1cXQmor17E5L9BL+g+nc561o26DP1Dk3MSAOD6Rp920gT3XWCv4+yfB/Bp4/rkAuz8An7YGhRXyn0/WOkfLxhQwjbT1MkT3vGJmbzx1uK5DiKf6WSzRSWt1I/qyvfQsfRtO2dpw8Q8oWHlB6OOpchxaSOKDOEnSOAPbVCw4ZlHgWb30lAZYskyRBLG7v45csxbiW03oglSkiYtmX6m767yongWeqjVRDXt1uzkNrLibPVE7G2V0brbtYfOJ18udWTXLLHB34rqidHnCYsm/AKFav4pSm9Af0e+V9fu7u9MhWg/pi8a02lprqTvrkHXX1ptxZm1pVlsFqZXDusFj34OBzmFlheN3yu/VLEA8Y2nVApWAGk9qjYl4lkP3dfd9WtnIWtq4SbwHGO1tFFa6lMsSyeYlOab0tiilM3NvSY2NukxNErFshHIQ1AhG3REztGpZfx3oIIoQK+jVFi+B4kuQh1fPIBJFbPbLs0XC/VWSI9Kxjl0XxYjxG2WAHkzhE4=

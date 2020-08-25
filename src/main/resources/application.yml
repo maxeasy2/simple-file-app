@@ -1,0 +1,34 @@
+spring:
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+      max-file-size: -1
+      max-request-size: -1
+server:
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+---
+spring:
+  profiles: local-win
+file:
+  upload:
+    path: C:\file
+
+---
+spring:
+  profiles: prod
+file:
+  upload:
+    path: /webapp/file
+---
+spring:
+  profiles: local-mac
+file:
+  upload:
+    path: /develop/workspace/simple-file/file
+
+
+
