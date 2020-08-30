@@ -1,6 +1,7 @@
 package com.mir.app.simplefile;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -10,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.Normalizer;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -40,6 +44,20 @@ public class ApiController {
             String originalFileName = Normalizer.normalize(file.getOriginalFilename(), Normalizer.Form.NFC);
             File dest = new File(fileUploadPath + "/" + originalFileName);
             file.transferTo(dest);
+        }
+    }
+
+    @DeleteMapping("/api/file")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete() throws Exception {
+        File file = new File(defaultFileUploadPath);
+        File[] fileList = file.listFiles();
+
+        for (File fileObj : fileList) {
+            System.out.println(fileObj.getName());
+            if (!"dummy.txt".equals(fileObj.getName())) {
+                FileUtils.forceDelete(fileObj);
+            }
         }
     }
 
