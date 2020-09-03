@@ -8,6 +8,7 @@ RUN chmod 777 /webapp
 RUN apk add --no-cache bash
 RUN apk add curl
 RUN apk add vim
+RUN apk add busybox-extras
 
 COPY "target/simple-file.jar" "/webapp/simple-file.jar"
 COPY "startup.sh" "/webapp/startup.sh"
