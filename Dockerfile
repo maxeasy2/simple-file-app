@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:11-jdk-slim
 MAINTAINER maxeasy2@naver.com
 
 RUN mkdir -p /webapp
