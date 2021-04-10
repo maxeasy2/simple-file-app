@@ -5,10 +5,12 @@ RUN mkdir -p /webapp
 RUN chmod 777 /webapp
 #RUN mkdir -p /webapp/log
 #RUN mkdir -p /webapp/file
-RUN apk add --no-cache bash
-RUN apk add curl
-RUN apk add vim
-RUN apk add busybox-extras
+
+#alpine
+#RUN apk add --no-cache bash
+#RUN apk add curl
+#RUN apk add vim
+#RUN apk add busybox-extras
 
 COPY "target/simple-file.jar" "/webapp/simple-file.jar"
 COPY "startup.sh" "/webapp/startup.sh"
