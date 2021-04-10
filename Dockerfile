@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-alpine:11
+FROM openjdk:11
 MAINTAINER maxeasy2@naver.com
 
 RUN mkdir -p /webapp
